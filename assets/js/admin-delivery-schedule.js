@@ -9,9 +9,9 @@ const apiFetch = wp.apiFetch;
 
 // لیست شهرهای استان کرمان
 const KERMAN_CITIES = [
-    "کرمان","رفسنجان","جیرفت","بم","زرند","سیرجان","کهنوج","راور","بافت",
-    "بردسیر","عنبرآباد","رودبار جنوب","فهرج","قلعه گنج","ریگان","منوجان",
-    "شهربابک","ارزوئیه","فاریاب","نرماشیر","انار","رابر","فهرج جدید"
+	"کرمان","رفسنجان","جیرفت","بم","زرند","سیرجان","کهنوج","راور","بافت",
+	"بردسیر","عنبرآباد","رودبار جنوب","فهرج","قلعه گنج","ریگان","منوجان",
+	"شهربابک","ارزوئیه","فاریاب","نرماشیر","انار","رابر","فهرج جدید"
 ];
 
 // روزهای هفته
@@ -20,52 +20,49 @@ const DAYS = ["شنبه","یک‌شنبه","دوشنبه","سه‌شنبه","چ�
 // کامپوننت اصلی پنل ادمین
 function App() {
 
-    // state برای نگهداری داده‌های زمان‌بندی
-    const [schedule, setSchedule] = useState({});
+	// state برای نگهداری داده‌های زمان‌بندی
+	const [schedule, setSchedule] = useState({});
 
-    // state برای لود اولیه دیتا
-    const [loading, setLoading] = useState(true);
+	// state برای لود اولیه دیتا
+	const [loading, setLoading] = useState(true);
 
-    // state برای نمایش پیام "ذخیره شد"
-    const [saved, setSaved] = useState(false);
+	// state برای نمایش پیام "ذخیره شد"
+	const [saved, setSaved] = useState(false);
 
-    // در اولین بار باز شدن پنل، داده‌ها از REST API دریافت می‌شوند
-    useEffect(() => {
-        // تغییر ۱: نام متغیر از wcFspData به smFspData تغییر یافت
-        apiFetch({ url: smFspData.rest_url })
-            .then(data => setSchedule(data))       // ذخیره داده دریافت شده
-            .finally(() => setLoading(false));     // پایان لود
-    }, []);
+	// در اولین بار باز شدن پنل، داده‌ها از REST API دریافت می‌شوند
+	useEffect(() => {
+		apiFetch({ url: wcFspData.rest_url })
+			.then(data => setSchedule(data))       // ذخیره داده دریافت شده
+			.finally(() => setLoading(false));     // پایان لود
+	}, []);
 
-    // آپدیت روز انتخاب شده برای هر شهر
-    const updateDay = (city, day) => {
-        setSchedule(prev => ({ ...prev, [city]: day }));
-    };
+	// آپدیت روز انتخاب شده برای هر شهر
+	const updateDay = (city, day) => {
+		setSchedule(prev => ({ ...prev, [city]: day }));
+	};
 
-    // ذخیره اطلاعات به سرور
-    const handleSave = () => {
-        setSaved(false);
-        // تغییر ۱: نام متغیر از wcFspData به smFspData تغییر یافت
-        apiFetch({
-            url: smFspData.rest_url,
-            method: 'POST',
-            data: schedule,                        // ارسال زمان‌بندی
-            headers: { 'X-WP-Nonce': smFspData.nonce }
-        }).then(() => {
-            setSaved(true);                        // نمایش پیام موفقیت
-        });
-    };
+	// ذخیره اطلاعات به سرور
+	const handleSave = () => {
+		setSaved(false);
+		apiFetch({
+			url: wcFspData.rest_url,
+			method: 'POST',
+			data: schedule,                        // ارسال زمان‌بندی
+			headers: { 'X-WP-Nonce': wcFspData.nonce }
+		}).then(() => {
+			setSaved(true);                        // نمایش پیام موفقیت
+		});
+	};
 
-    // نمایش لودر در صورت لود اولیه
-    if (loading) {
+	// نمایش لودر در صورت لود اولیه
+	if (loading) {
         return wp.element.createElement(wp.components.Spinner);
     }
 
     // کانتینر اصلی
     return wp.element.createElement(
         'div',
-        // تغییر ۲ (توصیه‌شده): نام کلاس برای یکپارچگی تغییر یافت
-        { className: 'sm-fsp-admin p-4', style: { maxWidth: '800px' } },
+        { className: 'wc-fsp-admin p-4', style: { maxWidth: '800px' } },
         // Card
         wp.element.createElement(
             wp.components.Card,
@@ -140,7 +137,6 @@ function App() {
 
 // رندر کامپوننت در داخل دیو مشخص شده در HTML
 wp.element.render(
-    wp.element.createElement(App),
-    // تغییر ۳ (توصیه‌شده): ID دیو برای یکپارچگی تغییر یافت
-    document.getElementById('sm-fsp-admin-app')
+	wp.element.createElement(App),
+	document.getElementById('wc-fsp-admin-app')
 );
