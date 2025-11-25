@@ -1,0 +1,9 @@
+/* assets/css/cart-shortcode.css */
+.sm-payment-options label {
+    display: block;
+    margin: .5em 0;
+}
+
+.sm-cheque-section {
+    margin-top: 1em;
+}

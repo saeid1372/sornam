@@ -1,0 +1,14 @@
+{
+  "name": "sorenam/sorenam",
+  "description": "Modern WooCommerce plugin with PHP 8.1+ and WC Blocks support",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sorenam\\": "src/"
+    }
+  }
+}

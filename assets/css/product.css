@@ -1,0 +1,24 @@
+.sorenam-peyment-options-shortcode-container {
+    padding: 1em 0;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 1em;
+}
+
+.sorenam-peyment-options-shortcode-container div {
+    margin-bottom: 0.5em;
+}
+
+.sorenam-peyment-options-shortcode-container input[type="radio"] {
+    margin-right: 0.5em;
+}
+
+.sorenam-peyment-options-shortcode-container label {
+    cursor: pointer;
+}
+
+/* assets/product/product.css */
+.column-_sm_installments,
+.column-_sm_package_qty {
+    width: 100px;
+    text-align: center;
+}
